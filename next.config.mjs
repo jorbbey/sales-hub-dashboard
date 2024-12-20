@@ -2,10 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    API_URL: process.env.API_URL,
+    API_URL: process.env.API_URL || "http://127.0.0.1:3000",
   },
-  // Add this section to ensure Next.js functions as a serverless app on Netlify
-  target: "serverless",
 };
 
 export default nextConfig;

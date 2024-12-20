@@ -7,6 +7,17 @@ import Notification from "@/components/Notification";
 import MobileSideBar from "@/components/MobileSideBar";
 
 export async function getStaticProps() {
+  const isBuild = process.env.NODE_ENV === "production";
+
+  if (isBuild) {
+    // Return placeholder data during the build
+    return {
+      props: {
+        sideData: [], // Replace with mock or placeholder data
+        leadsData: [], // Replace with mock or placeholder data
+      },
+    };
+  };
 const baseURL = process.env.API_URL || "http://localhost:3000";  // For local development, use localhost
 
 try {
