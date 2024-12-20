@@ -57,7 +57,7 @@ export default function Home({ sideData, leadsData }) {
   useEffect(() => {
     const timer = setTimeout(() => {
      setShowNotifications(true)
-    }, 3000)
+    })
     
     return ()=> clearTimeout(timer)
   }, [])

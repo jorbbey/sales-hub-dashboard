@@ -7,6 +7,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
+      <link rel="icon" href="/approve.png" />
       <body className="antialiased">
         <Main />
         <NextScript />
