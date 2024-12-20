@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Leads from "@/components/Leads";
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import UserDetails from "@/components/UserDetails";
 import Notification from "@/components/Notification";
 import MobileSideBar from "@/components/MobileSideBar";
+import searchImg from '../assets/undraw_searching_no1g.svg'
 
 export default function Home() {
   const [sideData, setSideData] = useState(null);
@@ -15,11 +17,10 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseURL = process.env.API_URL || "http://localhost:3000"; // Local or production API
-
       try {
-        const sideRes = await fetch(`${baseURL}/api/sidebar`);
-        const leadRes = await fetch(`${baseURL}/api/leads`);
+        // Fetch data directly from the local API (no need for an external API URL)
+        const sideRes = await fetch("/api/sidebar");
+        const leadRes = await fetch("/api/leads");
 
         if (!sideRes.ok || !leadRes.ok) {
           throw new Error(
@@ -38,12 +39,12 @@ export default function Home() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   if (!sideData || !leadsData) {
     return (
-      <div className="container mx-auto p-4">
-        <p>Error loading data. Please try again later.</p>
+      <div className="container w-[50%] bg-white shadow-xl rounded-lg m-auto my-10 p-4">
+        <Image src={searchImg} alt="searching" className="my-4 mx-auto" />
       </div>
     );
   }
