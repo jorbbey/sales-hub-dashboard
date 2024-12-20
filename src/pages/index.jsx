@@ -7,7 +7,7 @@ import Notification from "@/components/Notification";
 import MobileSideBar from '@/components/MobileSideBar'
   
   export async function getStaticProps() {
-    const baseURL = "http://localhost:3000";
+    const baseURL = process.env.API_URL || "http://localhost:3000";
 
     try {
       const sideRes = await fetch(`${baseURL}/api/sidebar`);
