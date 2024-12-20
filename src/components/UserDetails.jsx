@@ -27,7 +27,7 @@ const UserDetails = ({ setShowDetails, userDetails, setUserDetails }) => {
         className="h-[80vh] overflow-y-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <div className="bg-white w-[100%] md:w-[70%] lg:w-full max-w-3xl rounded-lg shadow-xl cursor-pointer">
+        <div className="bg-white m-auto w-[100%] md:w-[85%] lg:w-full max-w-3xl rounded-lg shadow-xl cursor-pointer">
           {/* first nav */}
           <div className="p-1 my-4 flex items-center justify-between rounded-lg">
             <span className="flex items-center">
@@ -104,6 +104,7 @@ const UserDetails = ({ setShowDetails, userDetails, setUserDetails }) => {
                 <span className="flex flex-col items-center bg-white mx-4 w-[80%] md:w-[30%] p-2 rounded-lg shadow-lg my-2">
                   <Image
                     src={business}
+                    alt="name"
                     className="w-[6.5em] md:w-[5em] my-4 md:my-2"
                   />
                   <p className="flex md:flex-col justify-around items-center w-full text-sm md:text-xs lg:text-sm">
@@ -116,6 +117,7 @@ const UserDetails = ({ setShowDetails, userDetails, setUserDetails }) => {
                 <span className="flex flex-col items-center bg-white mx-4 w-[80%] md:w-[30%] p-2 rounded-lg shadow-lg my-2">
                   <Image
                     src={value}
+                    alt="name"
                     className="w-[5em] md:w-[3.5em] my-4 md:my-2"
                   />
                   <p className="flex md:flex-col justify-around items-center w-full text-sm md:text-xs lg:text-sm">
@@ -128,6 +130,7 @@ const UserDetails = ({ setShowDetails, userDetails, setUserDetails }) => {
                 <span className="flex flex-col items-center bg-white mx-4 w-[80%] md:w-[30%] p-2 rounded-lg shadow-lg my-2">
                   <Image
                     src={ideas}
+                    alt="name"
                     className="w-[4em] md:w-[2.5em] my-4 md:my-2"
                   />
                   <p className="flex md:flex-col justify-around items-center w-full text-sm md:text-xs lg:text-sm">

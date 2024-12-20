@@ -5,9 +5,41 @@ import TopBar from "@/components/TopBar";
 import UserDetails from "@/components/UserDetails";
 import Notification from "@/components/Notification";
 import MobileSideBar from '@/components/MobileSideBar'
-import { getStaticProps } from "@/pages/dataFetch";
+  
+  export async function getStaticProps() {
+    const baseURL = "http://localhost:3000";
 
-export { getStaticProps };
+    try {
+      const sideRes = await fetch(`${baseURL}/api/sidebar`);
+      const leadRes = await fetch(`${baseURL}/api/leads`);
+
+      if (!sideRes.ok || !leadRes.ok) {
+        throw new Error(
+          `HTTP Error!, status: ${sideRes.status} || ${leadRes.status}`
+        );
+      }
+
+      const sideData = await sideRes.json();
+      const leadsData = await leadRes.json();
+
+      return {
+        props: {
+          sideData,
+          leadsData,
+        },
+      };
+    } catch (error) {
+      console.error(`Error fetching data:`, error);
+      return {
+        props: {
+          sideData: null,
+          leadsData: null,
+        },
+      };
+    }
+  }
+
+
 
 export default function Home({ sideData, leadsData }) {
   const [showDetails, setShowDetails] = useState(null);
