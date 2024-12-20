@@ -7,13 +7,11 @@ import Notification from "@/components/Notification";
 import MobileSideBar from "@/components/MobileSideBar";
 
 export async function getStaticProps() {
-const baseURL = process.env.NETLIFY_URL
-  ? `https://${process.env.NETLIFY_URL}`  // For Netlify, use the Netlify URL
-  : "http://localhost:3000";  // For local development, use localhost
+const baseURL = process.env.API_URL || "http://localhost:3000";  // For local development, use localhost
 
 try {
-  const sideRes = await fetch(`${baseURL}/.netlify/functions/api/sidebar`);
-  const leadRes = await fetch(`${baseURL}/.netlify/functions/api/leads`);
+  const sideRes = await fetch(`${baseURL}/api/sidebar`);
+  const leadRes = await fetch(`${baseURL}/api/leads`);
 
 
     if (!sideRes.ok || !leadRes.ok) {
