@@ -6,56 +6,39 @@ import UserDetails from "@/components/UserDetails";
 import Notification from "@/components/Notification";
 import MobileSideBar from "@/components/MobileSideBar";
 
-export async function getStaticProps() {
-  const isBuild = process.env.NODE_ENV === "production";
-
-  if (isBuild) {
-    // Return placeholder data during the build
-    return {
-      props: {
-        sideData: [], // Replace with mock or placeholder data
-        leadsData: [], // Replace with mock or placeholder data
-      },
-    };
-  };
-const baseURL = process.env.API_URL || "http://localhost:3000";  // For local development, use localhost
-
-try {
-  const sideRes = await fetch(`${baseURL}/api/sidebar`);
-  const leadRes = await fetch(`${baseURL}/api/leads`);
-
-
-    if (!sideRes.ok || !leadRes.ok) {
-      throw new Error(
-        `HTTP Error!, status: ${sideRes.status} || ${leadRes.status}`
-      );
-    }
-
-    const sideData = await sideRes.json();
-    const leadsData = await leadRes.json();
-
-    return {
-      props: {
-        sideData,
-        leadsData,
-      },
-    };
-  } catch (error) {
-    console.error(`Error fetching data:`, error);
-    return {
-      props: {
-        sideData: null,
-        leadsData: null,
-      },
-    };
-  }
-}
-
-export default function Home({ sideData, leadsData }) {
+export default function Home() {
+  const [sideData, setSideData] = useState(null);
+  const [leadsData, setLeadsData] = useState(null);
   const [showDetails, setShowDetails] = useState(null);
   const [userDetails, setUserDetails] = useState({});
-  const [showNotifications, setShowNotifications] = useState(null);
   const [toggleMobileNav, setToggleMobileNav] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const baseURL = process.env.API_URL || "http://localhost:3000"; // Local or production API
+
+      try {
+        const sideRes = await fetch(`${baseURL}/api/sidebar`);
+        const leadRes = await fetch(`${baseURL}/api/leads`);
+
+        if (!sideRes.ok || !leadRes.ok) {
+          throw new Error(
+            `HTTP Error!, status: ${sideRes.status} || ${leadRes.status}`
+          );
+        }
+
+        const sideData = await sideRes.json();
+        const leadsData = await leadRes.json();
+
+        setSideData(sideData);
+        setLeadsData(leadsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   if (!sideData || !leadsData) {
     return (
@@ -65,14 +48,6 @@ export default function Home({ sideData, leadsData }) {
     );
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowNotifications(true);
-    });
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="h-full container mx-auto p-4 bg-gray-100">
       <TopBar
@@ -81,7 +56,7 @@ export default function Home({ sideData, leadsData }) {
       />
       {toggleMobileNav && <MobileSideBar data={sideData} />}
       <Sidebar data={sideData} />
-      {showNotifications && <Notification data={leadsData} />}
+      <Notification data={leadsData} />
       {showDetails && (
         <UserDetails
           setShowDetails={setShowDetails}
